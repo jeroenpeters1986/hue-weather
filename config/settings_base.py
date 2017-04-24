@@ -1,0 +1,3 @@
+HUE_BRIDGE_IP = '192.168.2.4'
+HUE_BRIDGE_USER = 'newuser'
+HUE_LIGHT_ID = 9
