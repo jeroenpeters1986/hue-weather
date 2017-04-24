@@ -66,7 +66,7 @@ class Bridge(object):
         return Light(self, light_id)
 
     def add_schedule(self, schedule_attrs):
-        return self._request('POST', ['schedules'], schedule_attrs)
+            return self._request('POST', ['schedules'], schedule_attrs)
 
 
 class AssignableSetattr(type):
