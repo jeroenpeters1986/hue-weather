@@ -3,6 +3,7 @@
 
 import json
 
+# Python3 vs Python2
 try:
     from httplib import HTTPConnection
 except ImportError:
@@ -10,10 +11,6 @@ except ImportError:
 
 kelvin2mired = lambda k: 10 ** 6 / k
 huedegree2hue = lambda d: d * 182
-
-
-def cmyk2hsb(c, m, y, k):
-    pass
 
 
 def rgb2xy(r, g, b):
