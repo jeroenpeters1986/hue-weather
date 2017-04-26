@@ -1,31 +1,53 @@
-from time import sleep
-
+#!/usr/bin/env python
 import pyhue
-import settings
+import time
 
-bridge = pyhue.Bridge(settings.HUE_BRIDGE_IP, settings.HUE_BRIDGE_USER)
+import services.buienradar
+import services.hue
+import services.timing
 
-
-light = None
-for available_light in bridge.lights:
-    if settings.HUE_LIGHT_ID == int(available_light.id):
-        print "Found the correct light, name: {}".format(available_light.name)
-        light = available_light
-        break
+from config import settings
 
 
-COLOR_BLUE = pyhue.rgb2xy(138, 192, 58)
-light.xy = COLOR_BLUE
+def main():
+    """
+    Executes this one-time 'program' that shows the home-owner a hint about the
+    outside-temperature with a predefined color on a predefined offset. 
+    Want to influence this? Create your own settings.py, based on settings_base
+    """
 
-for i in range(1, 254, 15):
-    light.bri = i
-    print i
-    sleep(3)
+    bridge = pyhue.Bridge(settings.HUE_BRIDGE_IP, settings.HUE_BRIDGE_USER)
+    light = services.hue.get_light_by_id(bridge, settings.HUE_LIGHT_ID)
 
-#'bridge', 'id', 'manufacturername', 'modelid', 'name', 'set', 'state', 'swversion', 'type', 'uniqueid', 'update']
+    #light.xy = [0.4161, 0.2562]
 
-#  {u'on': False, u'hue': 55251, u'colormode': u'xy', u'effect': u'none', u'alert': u'select', u'xy': [0.4161, 0.2562], u'reachable': True, u'bri': 95, u'sat': 165}
+    # If the Hue Light is not on, you cannot set any attributes except for 'on'
+    if not light.on:
+        light.on = True
+        light.bri = 1
+
+    original_color_setting = light.xy
+    original_color_setting = [0.4161, 0.2562]
+    print original_color_setting
+
+    COLOR_BLUE = pyhue.rgb2xy(138, 192, 58)
+    print COLOR_BLUE
+    light.xy = COLOR_BLUE
+
+    for i in range(1, 254, 50):
+        light.bri = i
+        print i
+        time.sleep(3)
+
+    #'bridge', 'id', 'manufacturername', 'modelid', 'name', 'set', 'state', 'swversion', 'type', 'uniqueid', 'update']
+
+    #  {u'on': False, u'hue': 55251, u'colormode': u'xy', u'effect': u'none', u'alert': u'select', u'xy': [0.4161, 0.2562], u'reachable': True, u'bri': 95, u'sat': 165}
 
 
-light.xy = (0.4161, 0.2562)
-light.on = False
+    light.xy = original_color_setting
+    light.on = False
+
+
+
+if __name__ == "__main__":
+    main()

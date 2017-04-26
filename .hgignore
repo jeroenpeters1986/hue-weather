@@ -24,6 +24,7 @@ tags
 # Python
 *.pyc
 settings.py
+config/settings.py
 settings_development.py
 settings_production.py
 
