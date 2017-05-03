@@ -27,3 +27,10 @@ Shine a light on the current weather
 
 * Repo owner or admin
 * Other community or team contact
+
+### Author notes
+
+`
+    #'bridge', 'id', 'manufacturername', 'modelid', 'name', 'set', 'state', 'swversion', 'type', 'uniqueid', 'update']
+    #  {u'on': False, u'hue': 55251, u'colormode': u'xy', u'effect': u'none', u'alert': u'select', u'xy': [0.4161, 0.2562], u'reachable': True, u'bri': 95, u'sat': 165}
+    `
