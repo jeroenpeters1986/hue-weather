@@ -27,15 +27,16 @@ class HueException(Exception):
 
 
 class Bridge(object):
-    def __init__(self, ip_address, username):
+    def __init__(self, ip_address, username, port=80):
         self.ip_address = ip_address
         self.username = username
+        self.port = port
 
     def _request(self, method, route, data={}):
         content = json.dumps(data).lower()
         str_route = '/'.join(['/api', self.username] + route)
         try:
-            conn = HTTPConnection(self.ip_address)
+            conn = HTTPConnection(self.ip_address, self.port)
             conn.request(method, str_route, content)
             response = conn.getresponse()
             return json.loads(response.read().decode())
