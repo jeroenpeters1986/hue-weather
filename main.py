@@ -16,12 +16,13 @@ def main():
     Want to influence this? Create your own settings.py, based on settings_base
     """
 
-    bridge = pyhue.Bridge(settings.HUE_BRIDGE_IP, settings.HUE_BRIDGE_USER)
+    bridge = pyhue.Bridge(settings.HUE_BRIDGE_IP, settings.HUE_BRIDGE_USER,
+                          settings.HUE_BRIDGE_PORT)
     light = services.hue.get_light_by_id(bridge, settings.HUE_LIGHT_ID)
 
     # Times
 
-    # If the Hue Light is not on, you cannot set or get any attributes except for 'on'
+    # If Hue Light is off, you cannot set/get any attributes except for 'on'
     if not light.on:
         light.on = True
         light.bri = 1
@@ -30,7 +31,8 @@ def main():
     original_color_setting = light.xy
 
     # Retrieve the colorset
-    current_temperature = services.buienradar.get_station_temperature(settings.BUIENRADAR_WEATHER_STATION)
+    current_temperature = services.buienradar.get_station_temperature(
+        settings.BUIENRADAR_WEATHER_STATION)
     for max_temperature in settings.TEMPERATURE_COLORS:
         if current_temperature < max_temperature:
             color_set = settings.TEMPERATURE_COLORS[max_temperature]
