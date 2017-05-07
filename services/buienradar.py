@@ -30,7 +30,7 @@ def get_weather_from_station(station_id):
     return weather_info
 
 
-def get_station_temperature(station_id):
+def get_station_temperature(station_id, measure_element):
     """ Gather weather information based on a weather station ID """
     initial_xml = urllib.urlopen(get_xml_base_location()).read()
     xml_rootelement = etree.fromstring(initial_xml)
@@ -38,7 +38,7 @@ def get_station_temperature(station_id):
     for weather_station in xml_rootelement[0][7][0]:
         if weather_station.attrib['id'] == station_id:
             for item in weather_station:
-                if item.tag == 'temperatuurGC':  # temperatuur10cm
+                if item.tag == measure_element:
                     return float(item.text)
 
     return 1000
