@@ -6,6 +6,7 @@ HUE_LIGHT_ID = 9
 TOTAL_DURATION_MINUTES = 30
 
 BUIENRADAR_WEATHER_STATION = '6278'
+BUIENRADAR_MEASUREMENT = 'temperatuurGC'  # Should only be 'temperatuurGC' or 'temperatuur10cm'
 
 TEMPERATURE_COLORS = {
     -100: (15, 255, 255),

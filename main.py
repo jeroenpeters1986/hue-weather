@@ -20,8 +20,6 @@ def main():
                           settings.HUE_BRIDGE_PORT)
     light = services.hue.get_light_by_id(bridge, settings.HUE_LIGHT_ID)
 
-    # Times
-
     # If Hue Light is off, you cannot set/get any attributes except for 'on'
     if not light.on:
         light.on = True
@@ -32,7 +30,7 @@ def main():
 
     # Retrieve the colorset
     current_temperature = services.buienradar.get_station_temperature(
-        settings.BUIENRADAR_WEATHER_STATION)
+        settings.BUIENRADAR_WEATHER_STATION, settings.BUIENRADAR_MEASUREMENT)
     for max_temperature in settings.TEMPERATURE_COLORS:
         if current_temperature < max_temperature:
             color_set = settings.TEMPERATURE_COLORS[max_temperature]
@@ -40,10 +38,13 @@ def main():
     # Set the correct color to the light
     light.xy = pyhue.rgb2xy(color_set[0], color_set[1], color_set[2])
 
-    for i in range(1, 254, 50):
+    for i in range(4, 254, 50):
         light.bri = i
-        print i
-        time.sleep(3)
+        time.sleep(60)
+
+    # Since it took 5 minutes to start up, we only want to wait if the total duration exceeds 5 minutes
+    if settings.TOTAL_DURATION_MINUTES > 5:
+        time.sleep((settings.TOTAL_DURATION_MINUTES-5)*60)
 
     light.xy = original_color_setting
     light.on = False
