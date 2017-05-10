@@ -25,7 +25,7 @@ def main():
         light.on = True
         light.bri = 1
 
-    # Store this, so we can restore it after Temperathue is done
+    # Store this, so we can restore it after we are done
     original_color_setting = light.xy
 
     # Retrieve the colorset
